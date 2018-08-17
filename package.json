@@ -20,6 +20,6 @@
     "react-app-rewired": "^1.5.2"
   },
   "theme": {
-    "primary-color": "#FFFFFF"
+    "primary-color": "#1DA57A"
   }
 }
