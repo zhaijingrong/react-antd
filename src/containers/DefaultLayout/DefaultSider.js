@@ -3,8 +3,8 @@
  */
 
 import React, { Component } from 'react';
-import { Layout, Menu, Breadcrumb, Icon } from 'antd';
-import watoneLogo from '../../assets/img/logo.png'
+import { Layout, Menu, Icon } from 'antd';
+import { NavLink } from 'react-router-dom';
 
 const { Sider } = Layout;
 const SubMenu = Menu.SubMenu;
@@ -27,14 +27,21 @@ class DefaultSider extends Component {
                 <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
                     <Menu.Item key="1">
                         <Icon type="pie-chart" />
-                        <span>概览</span>
+                        概览
+                        <NavLink to="/">概览</NavLink>
                     </Menu.Item>
                     <SubMenu
                         key="sub1"
                         title={<span><Icon type="area-chart" /><span>流量流向</span></span>}>
-                        <Menu.Item key="3">Top域名</Menu.Item>
-                        <Menu.Item key="4">Top目标</Menu.Item>
-                        <Menu.Item key="5">Top端口</Menu.Item>
+                        <Menu.Item key="3">
+                            <NavLink to="/topDomain">Top域名</NavLink>
+                        </Menu.Item>
+                        <Menu.Item key="4">
+                            <NavLink to="/topDst">Top目标</NavLink>
+                        </Menu.Item>
+                        <Menu.Item key="5">
+                            <NavLink to="/topPort">Top端口</NavLink>
+                        </Menu.Item>
                     </SubMenu>
                     {/*<SubMenu*/}
                         {/*key="sub2"*/}
@@ -45,10 +52,13 @@ class DefaultSider extends Component {
                     <SubMenu
                         key="sub3"
                         title={<span><Icon type="team" /><span>系统维护</span></span>}>
-                        <Menu.Item key="8">用户管理</Menu.Item>
-                        <Menu.Item key="9">系统状态</Menu.Item>
+                        <Menu.Item key="8">
+                            <NavLink to="/users">用户管理</NavLink>
+                        </Menu.Item>
+                        <Menu.Item key="9">
+                            <NavLink to="/systemStatus">系统状态</NavLink>
+                        </Menu.Item>
                     </SubMenu>
-
                 </Menu>
             </Sider>
         )
