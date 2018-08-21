@@ -49,16 +49,16 @@ class DefaultSider extends Component {
                         {/*<Menu.Item key="6">Team 1</Menu.Item>*/}
                         {/*<Menu.Item key="7">Team 2</Menu.Item>*/}
                     {/*</SubMenu>*/}
-                    <SubMenu
-                        key="sub3"
-                        title={<span><Icon type="team" /><span>系统维护</span></span>}>
-                        <Menu.Item key="8">
-                            <NavLink to="/users">用户管理</NavLink>
-                        </Menu.Item>
-                        <Menu.Item key="9">
-                            <NavLink to="/systemStatus">系统状态</NavLink>
-                        </Menu.Item>
-                    </SubMenu>
+                    {/*<SubMenu*/}
+                        {/*key="sub3"*/}
+                        {/*title={<span><Icon type="team" /><span>系统维护</span></span>}>*/}
+                        {/*<Menu.Item key="8">*/}
+                            {/*<NavLink to="/users">用户管理</NavLink>*/}
+                        {/*</Menu.Item>*/}
+                        {/*<Menu.Item key="9">*/}
+                            {/*<NavLink to="/systemStatus">系统状态</NavLink>*/}
+                        {/*</Menu.Item>*/}
+                    {/*</SubMenu>*/}
                 </Menu>
             </Sider>
         )
