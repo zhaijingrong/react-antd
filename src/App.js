@@ -6,7 +6,6 @@ import reduxThunk from 'redux-thunk';
 import rootReducer from './reducers';
 import { Provider } from 'react-redux';
 import logger from 'redux-logger';
-import { composeWithDevTools } from 'redux-devtools-extension';
 import { Router, Route, Switch } from 'react-router-dom';
 import Login from './components/auth/signin';
 import Logout from './components/auth/signout'
@@ -14,9 +13,7 @@ import history from './history';
 
 const store = createStore(
     rootReducer,
-    composeWithDevTools(
-        applyMiddleware(reduxThunk, logger)
-    )
+    applyMiddleware(reduxThunk, logger)
 );
 
 const token = localStorage.getItem('jwt');

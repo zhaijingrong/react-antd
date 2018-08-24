@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import { Layout } from 'antd';
 import { Menu, Dropdown, Icon, message } from 'antd';
 import { NavLink } from 'react-router-dom';
+import { Row, Col } from 'antd';
 
 const { Header } = Layout;
 
@@ -31,13 +32,20 @@ class DefaultHeader extends Component {
     render() {
         return (
             <Header style={{ background: '#fff', padding: 0 }} >
-                <div>
-                    <Dropdown overlay={menu}>
-                        <a className="ant-dropdown-link">
-                          username <Icon type="down" />
-                        </a>
-                  </Dropdown>
-                </div>
+                <Row type="flex" justify="space-between" align="middle">
+                    <Col span={4}>
+
+                    </Col>
+                    <Col span={4}>
+                          <div>
+                            <Dropdown overlay={menu}>
+                                <a className="ant-dropdown-link">
+                                  username <Icon type="down" />
+                                </a>
+                            </Dropdown>
+                          </div>
+                    </Col>
+                </Row>
             </Header>
         )
     }

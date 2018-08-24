@@ -3,6 +3,7 @@
  */
 import { combineReducers } from 'redux';
 import authReducer from './authReducer'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const rootReducer = combineReducers({
     authReducer,

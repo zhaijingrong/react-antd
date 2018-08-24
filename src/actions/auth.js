@@ -16,7 +16,7 @@ function signinUser ({username, password}) {
                  history.push('/');
             })
             .catch(() => {
-                dispatch({type: 'AUTH_ERROR', payload: 'Bad Login Info'});
+                dispatch({type: 'AUTH_ERROR', payload: '账号或密码错误！'});
             })
     }
 };
