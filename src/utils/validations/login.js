@@ -13,7 +13,7 @@ const validateInput = (data) => {
     }
 
     if (validator.isEmpty(data.password)) {
-        errors.username = '必填';
+        errors.password = '必填';
     }
 
     return {

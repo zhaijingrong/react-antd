@@ -2,7 +2,7 @@
  * Created by zjr on 2018/8/20.
  */
 import React, { Component } from 'react';
-import { Bar, Doughnut, Line, Pie, Polar, Radar } from 'react-chartjs-2';
+import { Bar, Doughnut, Line, Pie } from 'react-chartjs-2';
 import { Row, Col } from 'antd';
 
 const line = {

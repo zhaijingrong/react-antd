@@ -4,15 +4,16 @@
 
 import axios from 'axios';
 import history from '../history';
+import jwtDecode from 'jwt-decode'
 
 function signinUser ({username, password}) {
     return function (dispatch) {
         axios.post('http://localhost:8000/api-auth/', {username, password})
             .then(response => {
                 console.log(response)
-                dispatch({type: 'AUTH_USER'});
-                localStorage.setItem('jwt', response.data.token);
-                // browserHistory.push("/");
+                const token = response.data.token;
+                dispatch({type: 'AUTH_USER', user: jwtDecode(token)});
+                localStorage.setItem('jwt', token);
                  history.push('/');
             })
             .catch(() => {
