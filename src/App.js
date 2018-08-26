@@ -10,7 +10,8 @@ import { Router, Route, Switch } from 'react-router-dom';
 import Login from './components/auth/signin';
 import Logout from './components/auth/signout'
 import history from './history';
-import jwtDecode from 'jwt-decode'
+import jwtDecode from 'jwt-decode';
+import setAuthToken from './utils/setAuthToken';
 
 const store = createStore(
     rootReducer,
@@ -22,8 +23,8 @@ const token = localStorage.getItem('jwt');
 
 if(token) {
     store.dispatch({ type: "AUTH_USER", user: jwtDecode(token)});
+    setAuthToken(token);
 }
-
 
 class App extends Component {
   render() {

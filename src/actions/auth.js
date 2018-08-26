@@ -4,7 +4,8 @@
 
 import axios from 'axios';
 import history from '../history';
-import jwtDecode from 'jwt-decode'
+import jwtDecode from 'jwt-decode';
+import setAuthToken from '../utils/setAuthToken';
 
 function signinUser ({username, password}) {
     return function (dispatch) {
@@ -14,7 +15,8 @@ function signinUser ({username, password}) {
                 const token = response.data.token;
                 dispatch({type: 'AUTH_USER', user: jwtDecode(token)});
                 localStorage.setItem('jwt', token);
-                 history.push('/');
+                setAuthToken(token);
+                history.push('/');
             })
             .catch(() => {
                 dispatch({type: 'AUTH_ERROR', payload: '账号或密码错误！'});

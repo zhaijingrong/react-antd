@@ -24,22 +24,21 @@ class DefaultSider extends Component {
             <Sider collapsible collapsed={ this.state.collapsed } onCollapse={this.onCollapse}>
                 <div className="logo">
                 </div>
-                <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-                    <Menu.Item key="1">
+                <Menu theme="dark" defaultSelectedKeys={['dashboard']} mode="inline">
+                    <Menu.Item key="dashboard">
                         <Icon type="pie-chart" />
-                        概览
-                        <NavLink to="/">概览</NavLink>
+                            <NavLink to="/dashboard" style={{ display: "inline" }}>概览</NavLink>
                     </Menu.Item>
                     <SubMenu
                         key="sub1"
                         title={<span><Icon type="area-chart" /><span>流量流向</span></span>}>
-                        <Menu.Item key="3">
+                        <Menu.Item key="topDomain">
                             <NavLink to="/topDomain">Top域名</NavLink>
                         </Menu.Item>
-                        <Menu.Item key="4">
+                        <Menu.Item key="topDst">
                             <NavLink to="/topDst">Top目标</NavLink>
                         </Menu.Item>
-                        <Menu.Item key="5">
+                        <Menu.Item key="topPort">
                             <NavLink to="/topPort">Top端口</NavLink>
                         </Menu.Item>
                     </SubMenu>
