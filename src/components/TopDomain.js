@@ -4,34 +4,33 @@
 
 import React, { Component } from 'react';
 import { Table, Button } from 'antd';
+import { connect } from 'react-redux';
+import { fetchDomains } from '../actions/domain';
 
 const columns = [{
-  title: '域名',
-  dataIndex: 'domainName',
+    key: 'domain_name',
+    title: '域名',
+    dataIndex: 'domain_name',
 }, {
-  title: '上行流量',
-  dataIndex: 'uploadFlow',
+    key: 'upload_flow',
+    title: '上行流量',
+    dataIndex: 'upload_flow',
 }, {
-  title: '下行流量',
-  dataIndex: 'DownloadFlow',
+    key: 'download_flow',
+    title: '下行流量',
+    dataIndex: 'download_flow',
 },{
-  title: '总流量',
-  dataIndex: 'totalFlow',
+    key: 'total_flow',
+    title: '总流量',
+    dataIndex: 'total_flow',
 }];
 
-const data = [];
 
-for (let i = 0; i < 46; i++ ) {
-    data.push({
-        key: i,
-        domainName: `Edward King ${i}`,
-        uploadFlow: `${i}`,
-        DownloadFlow: `${i}`,
-        totalFlow: `${i}`
-    });
-}
+class TopDomain extends Component {
+    componentWillMount() {
+        this.props.fetchDomains();
+    }
 
-class TopDomainTable extends Component {
     state = {
         selectedRowKeys: [],
         loading: false,
@@ -74,21 +73,16 @@ class TopDomainTable extends Component {
                         {hasSelected ? `Selected ${selectedRowKeys.length} items` : '' }
                     </span>
                 </div>
-                <Table rowSelection={rowSelection} columns={columns} dataSource={data} size="small" />
+                <Table rowSelection={rowSelection} columns={columns} rowKey={'id'} dataSource={this.props.domains} size="small" />
             </div>
         );
     }
 }
 
-
-class TopDomain extends Component {
-  render() {
-      return (
-          <div>
-            <TopDomainTable/>
-          </div>
-      );
-  }
+function mapStateToProps(state) {
+    return {
+        domains: state.domainReducer.domains,
+    }
 }
 
-export default TopDomain;
+export default connect(mapStateToProps, { fetchDomains })(TopDomain);

@@ -11,14 +11,13 @@ function signinUser ({username, password}) {
     return function (dispatch) {
         axios.post('http://localhost:8000/api-auth/', {username, password})
             .then(response => {
-                console.log(response)
                 const token = response.data.token;
                 dispatch({type: 'AUTH_USER', user: jwtDecode(token)});
                 localStorage.setItem('jwt', token);
                 setAuthToken(token);
                 history.push('/');
             })
-            .catch(() => {
+            .catch((error) => {
                 dispatch({type: 'AUTH_ERROR', payload: '账号或密码错误！'});
             })
     }

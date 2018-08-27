@@ -22,7 +22,6 @@ class Signin extends Component {
 
     isValid = () => {
         const { errors, isValid } = validateInput(this.state);
-        console.log(errors)
         if(!isValid) {
             this.setState({ errors });
         }
