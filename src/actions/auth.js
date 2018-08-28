@@ -15,7 +15,7 @@ function signinUser ({username, password}) {
                 dispatch({type: 'AUTH_USER', user: jwtDecode(token)});
                 localStorage.setItem('jwt', token);
                 setAuthToken(token);
-                history.push('/');
+                history.push('/dashboard');
             })
             .catch((error) => {
                 dispatch({type: 'AUTH_ERROR', payload: '账号或密码错误！'});
