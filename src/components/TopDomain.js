@@ -3,11 +3,12 @@
  */
 
 import React, { Component } from 'react';
-import { Table } from 'antd';
+import { Table, Button } from 'antd';
 import { connect } from 'react-redux';
 import { fetchDomains } from '../actions/domain';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import './ReactDatePickerTimeList.css';
 
 import moment from 'moment';
 import 'moment/locale/zh-cn';
@@ -41,12 +42,19 @@ class TopDomain extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            domain_name: '',
+            port: '',
             startDate: moment(),
             endDate: moment(),
         };
 
         this.handleStartDateChange = this.handleStartDateChange.bind(this);
         this.handleEndDateChange = this.handleEndDateChange.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
+    }
+
+    handleInputChange(event) {
+        this.setState({ [event.target.name]: event.target.value })
     }
 
     handleStartDateChange(date) {
@@ -62,7 +70,7 @@ class TopDomain extends Component {
     }
 
     componentWillMount() {
-        this.props.fetchDomains();
+        this.props.fetchDomains(this.state);
     }
 
     render() {
@@ -77,7 +85,13 @@ class TopDomain extends Component {
                                         域名
                                     </label>
                                     <div className="col-sm-8">
-                                        <input type="text" className="form-control form-control-sm"/>
+                                        <input
+                                            type="text"
+                                            className="form-control form-control-sm"
+                                            value={this.state.domain_name}
+                                            onChange={this.handleInputChange}
+                                            name="domain_name"
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -87,39 +101,62 @@ class TopDomain extends Component {
                                         端口号
                                     </label>
                                     <div className="col-sm-8">
-                                        <input type="text" className="form-control form-control-sm"/>
+                                        <select
+                                            type="text"
+                                            className="form-control form-control-sm"
+                                            value={this.state.port}
+                                            onChange={this.handleInputChange}
+                                            name="port"
+                                        >
+                                            <option value="80">80</option>
+                                            <option value="443">443</option>
+                                            <option value="8080">8080</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-sm-3">
+                            <div className="col-sm-5">
                                 <div className="form-group row">
-                                    <label htmlFor="" className="col-sm-4 col-form-label col-form-label-sm" style={{ paddingRight: '0px'}}>
+                                    <label htmlFor="" className="col-sm-2 col-form-label col-form-label-sm" style={{ paddingRight: '0px'}}>
                                         起始时间
                                     </label>
-                                    <div className="col-sm-8">
+                                    <div className="col-sm-10">
                                         <DatePicker
                                             className="form-control form-control-sm"
                                             selected={this.state.startDate}
+                                            showTimeSelect
+                                            timeIntervals={60}
+                                            dateFormat="YYYY/MM/DD HH:mm"
                                             onChange={this.handleStartDateChange}
                                         />
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-sm-3 offset-1">
+                            <div className="col-sm-5">
                                 <div className="form-group row">
-                                    <label htmlFor="" className="col-sm-4 col-form-label col-form-label-sm" style={{ paddingRight: '0px'}}>
+                                    <label htmlFor="" className="col-sm-2 col-form-label col-form-label-sm" style={{ paddingRight: '0px'}}>
                                         结束时间
                                     </label>
-                                    <div className="col-sm-8">
+                                    <div className="col-sm-10">
                                         <DatePicker
                                             className="form-control form-control-sm"
                                             selected={this.state.endDate}
+                                            showTimeSelect
+                                            timeIntervals={15}
+                                            dateFormat="YYYY/MM/DD HH:mm"
                                             onChange={this.handleEndDateChange}
                                         />
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-sm-6">
+                                <Button onClick={this.props.fetchDomains}>
+                                    查询
+                                </Button>
                             </div>
                         </div>
                     </form>

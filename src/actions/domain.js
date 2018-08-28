@@ -5,8 +5,9 @@
 import axios from 'axios';
 import history from '../history';
 
-function fetchDomains() {
+function fetchDomains(postData) {
     return function (dispatch) {
+        console.log(postData);
         axios.get('http://localhost:8000/api/domain/', {})
             .then((response) => {
                 dispatch({
