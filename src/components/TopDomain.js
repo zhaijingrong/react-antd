@@ -6,6 +6,13 @@ import React, { Component } from 'react';
 import { Table } from 'antd';
 import { connect } from 'react-redux';
 import { fetchDomains } from '../actions/domain';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
+import moment from 'moment';
+import 'moment/locale/zh-cn';
+
+moment.locale('zh-cn');
 
 const columns = [{
     key: 'domain_name',
@@ -27,10 +34,33 @@ const columns = [{
     key: 'port',
     title: '端口号',
     dataIndex: 'port',
-},];
+}];
 
 
 class TopDomain extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            startDate: moment(),
+            endDate: moment(),
+        };
+
+        this.handleStartDateChange = this.handleStartDateChange.bind(this);
+        this.handleEndDateChange = this.handleEndDateChange.bind(this);
+    }
+
+    handleStartDateChange(date) {
+        this.setState({
+            startDate: date
+        })
+    }
+
+    handleEndDateChange(date) {
+        this.setState({
+            endDate: date
+        })
+    }
+
     componentWillMount() {
         this.props.fetchDomains();
     }
@@ -69,7 +99,11 @@ class TopDomain extends Component {
                                         起始时间
                                     </label>
                                     <div className="col-sm-8">
-                                        <input type="text" className="form-control form-control-sm"/>
+                                        <DatePicker
+                                            className="form-control form-control-sm"
+                                            selected={this.state.startDate}
+                                            onChange={this.handleStartDateChange}
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -79,7 +113,11 @@ class TopDomain extends Component {
                                         结束时间
                                     </label>
                                     <div className="col-sm-8">
-                                        <input type="text" className="form-control form-control-sm"/>
+                                        <DatePicker
+                                            className="form-control form-control-sm"
+                                            selected={this.state.endDate}
+                                            onChange={this.handleEndDateChange}
+                                        />
                                     </div>
                                 </div>
                             </div>
