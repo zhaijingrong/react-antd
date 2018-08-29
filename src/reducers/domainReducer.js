@@ -3,7 +3,8 @@
  */
 
 const INITIAL_STATE = {
-    domains: null,
+    results: null,
+    count: null,
     error: null,
     loading: true
 };
@@ -11,9 +12,14 @@ const INITIAL_STATE = {
 const domainReducer = (state=INITIAL_STATE, action) => {
     switch (action.type) {
         case 'FETCH_DOMAINS_SUCCESS':
-            return {...state, domains: action.payload, loading: false };
+            return {
+                ...state,
+                results: action.payload.results,
+                count: action.payload.count,
+                loading: false
+            };
         case 'FETCH_DOMAINS_REQUEST':
-            return {...state, domains: null, loading: true };
+            return {...state, loading: true };
         default:
             return state;
     }

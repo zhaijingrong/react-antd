@@ -3,7 +3,7 @@
  */
 
 import React, { Component } from 'react';
-import { Table, Button, Spin } from 'antd';
+import { Table, Button } from 'antd';
 import { connect } from 'react-redux';
 import { fetchDomains } from '../actions/domain';
 import DatePicker from 'react-datepicker';
@@ -23,12 +23,29 @@ class TopDomain extends Component {
             port: '',
             start_date: moment().subtract(1, 'h'),
             end_date: moment(),
+            page: 1,
+            page_size: 10,
         };
 
         this.handleStartDateChange = this.handleStartDateChange.bind(this);
         this.handleEndDateChange = this.handleEndDateChange.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.searchDomain = this.searchDomain.bind(this);
+        this.onChangePage = this.onChangePage.bind(this);
+    }
+
+    onChangePage(page, pageSize) {
+        this.setState({
+            page: page,
+        });
+
+        const postDate = {
+            ...this.state,
+            page: page,
+            start_date: this.state.start_date.unix(),
+            end_date: this.state.end_date.unix()
+        };
+        this.props.fetchDomains(postDate);
     }
 
     handleInputChange(event) {
@@ -88,7 +105,8 @@ class TopDomain extends Component {
             dataIndex: 'port',
         }];
 
-        const domains = this.props.domains;
+        const domains = this.props.results;
+        const count = this.props.count;
 
         return (
             <div>
@@ -180,9 +198,18 @@ class TopDomain extends Component {
                     </form>
                 </div>
                 <div style={{ marginTop: '16px'}}>
-                    <Spin spinning={this.props.loading}>
-                        <Table columns={columns} rowKey={'id'} dataSource={domains} />
-                    </Spin>
+                    <Table
+                        columns={columns}
+                        rowKey={'id'}
+                        dataSource={domains}
+                        loading={this.props.loading}
+                        pagination={{
+                            pageSize: this.state.page_size,
+                            current: this.state.page,
+                            onChange: this.onChangePage,
+                            total: count
+                        }}
+                    />
                 </div>
             </div>
         );
@@ -191,7 +218,8 @@ class TopDomain extends Component {
 
 function mapStateToProps(state) {
     return {
-        domains: state.domainReducer.domains,
+        results: state.domainReducer.results,
+        count: state.domainReducer.count,
         loading: state.domainReducer.loading
     }
 }
