@@ -7,12 +7,15 @@ import history from '../history';
 
 function fetchDomains(postData) {
     return function (dispatch) {
-        console.log(postData);
-        axios.get('http://localhost:8000/api/domain/', {})
+        dispatch({
+            type: 'FETCH_DOMAINS_REQUEST',
+        });
+        axios.get('http://localhost:8000/api/domain/', { params: postData})
             .then((response) => {
                 dispatch({
-                    type: 'FETCH_DOMAINS',
-                    payload: response.data
+                    type: 'FETCH_DOMAINS_SUCCESS',
+                    payload: response.data,
+                    loading: false,
                 })
             })
             .catch((error) => {

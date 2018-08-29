@@ -3,7 +3,7 @@
  */
 
 import React, { Component } from 'react';
-import { Table, Button } from 'antd';
+import { Table, Button, Spin } from 'antd';
 import { connect } from 'react-redux';
 import { fetchDomains } from '../actions/domain';
 import DatePicker from 'react-datepicker';
@@ -15,42 +15,20 @@ import 'moment/locale/zh-cn';
 
 moment.locale('zh-cn');
 
-const columns = [{
-    key: 'domain_name',
-    title: '域名',
-    dataIndex: 'domain_name',
-}, {
-    key: 'upload_flow',
-    title: '上行流量',
-    dataIndex: 'upload_flow',
-}, {
-    key: 'download_flow',
-    title: '下行流量',
-    dataIndex: 'download_flow',
-},{
-    key: 'total_flow',
-    title: '总流量',
-    dataIndex: 'total_flow',
-},{
-    key: 'port',
-    title: '端口号',
-    dataIndex: 'port',
-}];
-
-
 class TopDomain extends Component {
     constructor(props) {
         super(props);
         this.state = {
             domain_name: '',
             port: '',
-            startDate: moment(),
-            endDate: moment(),
+            start_date: moment().subtract(1, 'h'),
+            end_date: moment(),
         };
 
         this.handleStartDateChange = this.handleStartDateChange.bind(this);
         this.handleEndDateChange = this.handleEndDateChange.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.searchDomain = this.searchDomain.bind(this);
     }
 
     handleInputChange(event) {
@@ -59,21 +37,59 @@ class TopDomain extends Component {
 
     handleStartDateChange(date) {
         this.setState({
-            startDate: date
+            start_date: date
         })
     }
 
     handleEndDateChange(date) {
         this.setState({
-            endDate: date
+            end_date: date
         })
     }
 
-    componentWillMount() {
-        this.props.fetchDomains(this.state);
+    searchDomain() {
+        const postDate = {
+            ...this.state,
+            start_date: this.state.start_date.unix(),
+            end_date: this.state.end_date.unix()
+        };
+        this.props.fetchDomains(postDate);
+    }
+
+    componentDidMount() {
+        const postDate = {
+            ...this.state,
+            start_date: this.state.start_date.unix(),
+            end_date: this.state.end_date.unix()
+        };
+        this.props.fetchDomains(postDate);
     }
 
     render() {
+        const columns = [{
+            key: 'domain_name',
+            title: '域名',
+            dataIndex: 'domain_name',
+        }, {
+            key: 'upload_flow',
+            title: '上行流量',
+            dataIndex: 'upload_flow',
+        }, {
+            key: 'download_flow',
+            title: '下行流量',
+            dataIndex: 'download_flow',
+        },{
+            key: 'total_flow',
+            title: '总流量',
+            dataIndex: 'total_flow',
+        },{
+            key: 'port',
+            title: '端口号',
+            dataIndex: 'port',
+        }];
+
+        const domains = this.props.domains;
+
         return (
             <div>
                 <div style={{ backgroundColor: '#f7f7f9', padding: '10px' }}>
@@ -108,6 +124,7 @@ class TopDomain extends Component {
                                             onChange={this.handleInputChange}
                                             name="port"
                                         >
+                                            <option value=""> </option>
                                             <option value="80">80</option>
                                             <option value="443">443</option>
                                             <option value="8080">8080</option>
@@ -125,10 +142,11 @@ class TopDomain extends Component {
                                     <div className="col-sm-10">
                                         <DatePicker
                                             className="form-control form-control-sm"
-                                            selected={this.state.startDate}
+                                            selected={this.state.start_date}
                                             showTimeSelect
                                             timeIntervals={60}
-                                            dateFormat="YYYY/MM/DD HH:mm"
+                                            utcOffset={+8}
+                                            dateFormat="YYYY/MM/DD HH:00"
                                             onChange={this.handleStartDateChange}
                                         />
                                     </div>
@@ -142,10 +160,10 @@ class TopDomain extends Component {
                                     <div className="col-sm-10">
                                         <DatePicker
                                             className="form-control form-control-sm"
-                                            selected={this.state.endDate}
+                                            selected={this.state.end_date}
                                             showTimeSelect
-                                            timeIntervals={15}
-                                            dateFormat="YYYY/MM/DD HH:mm"
+                                            timeIntervals={60}
+                                            dateFormat="YYYY/MM/DD HH:00"
                                             onChange={this.handleEndDateChange}
                                         />
                                     </div>
@@ -154,19 +172,19 @@ class TopDomain extends Component {
                         </div>
                         <div className="row">
                             <div className="col-sm-6">
-                                <Button onClick={this.props.fetchDomains}>
+                                <Button onClick={this.searchDomain}>
                                     查询
                                 </Button>
                             </div>
                         </div>
                     </form>
                 </div>
-
                 <div style={{ marginTop: '16px'}}>
-                    <Table columns={columns} rowKey={'id'} dataSource={this.props.domains} />
+                    <Spin spinning={this.props.loading}>
+                        <Table columns={columns} rowKey={'id'} dataSource={domains} />
+                    </Spin>
                 </div>
             </div>
-
         );
     }
 }
@@ -174,6 +192,7 @@ class TopDomain extends Component {
 function mapStateToProps(state) {
     return {
         domains: state.domainReducer.domains,
+        loading: state.domainReducer.loading
     }
 }
 
