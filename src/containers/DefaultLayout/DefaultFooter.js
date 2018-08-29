@@ -10,7 +10,7 @@ class DefaultFooter extends Component {
     render() {
         return (
             <Footer style={{ textAlign: 'center' }}>
-                Flow Analyse ©2018 Created by Watone
+                Flow Analyse ©2018 
             </Footer>
         )
     }

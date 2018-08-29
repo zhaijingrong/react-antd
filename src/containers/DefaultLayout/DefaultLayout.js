@@ -23,10 +23,10 @@ class DefaultLayout extends Component {
                         <Layout style={{ padding: '16px 24px 24px' }}>
                             <Content style={{ background: '#fff', padding: 24, minHeight: 280 }}>
                                 <Switch>
-                                    <Route exact path="/dashboard" name="Dashboard" component={RequireAuth(Dashboard)} />
-                                    <Route exact path="/topDomain" name="TopDomain" component={RequireAuth(TopDomain)} />
-                                    <Route exact path="/topPort" name="TopPort" component={RequireAuth(TopPort)} />
-                                    <Route exact path="/topDst" name="TopDst" component={RequireAuth(TopDst)} />
+                                    <Route exact path="/dashboard" name="Dashboard" component={Dashboard} />
+                                    <Route exact path="/topDomain" name="TopDomain" component={TopDomain} />
+                                    <Route exact path="/topPort" name="TopPort" component={TopPort} />
+                                    <Route exact path="/topDst" name="TopDst" component={TopDst} />
                                     <Redirect from="/" to="/dashboard" />
                                 </Switch>
                             </Content>

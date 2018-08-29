@@ -32,9 +32,9 @@ class DefaultSider extends Component {
                     <SubMenu
                         key="sub1"
                         title={<span><Icon type="area-chart" /><span>流量流向</span></span>}>
-                        <Menu.Item key="topDomain">
-                            <NavLink to="/topDomain">Top域名</NavLink>
-                        </Menu.Item>
+                        {/*<Menu.Item key="topDomain">*/}
+                        {/*    <NavLink to="/topDomain">Top域名</NavLink>*/}
+                        {/*</Menu.Item>*/}
                         <Menu.Item key="topDst">
                             <NavLink to="/topDst">Top目标</NavLink>
                         </Menu.Item>
